@@ -1,0 +1,108 @@
+---
+import { contacts, formEndpoint } from '../data/contacts.js';
+const { telegram, phone, email } = contacts;
+const ready = Boolean(formEndpoint);
+---
+<section class="wrap request" id="request">
+  <h2>Розкажіть, <em>що потрібно зробити</em></h2>
+  <!-- Sending logic is added together with the handler (stage 5). -->
+  <form>
+    {!ready && <p class="status" role="note">Форма ще не підключена: це попередня версія сайту.</p>}
+    <fieldset disabled={!ready}>
+      <label>Ім'я <input name="name" autocomplete="name" placeholder="Як до вас звертатися" required /></label>
+      <label>Телефон або Telegram <input name="contact" placeholder="Куди відповісти" required /></label>
+      <label>Хто ви
+        <select name="type">
+          <option value="">Не вказано</option>
+          <option>Бізнес</option>
+          <option>Приватний клієнт</option>
+        </select>
+      </label>
+      <label>Опис <textarea name="message" rows="4" placeholder="Наприклад: потрібно налаштувати мережу в офісі" required></textarea></label>
+      <button class="button" type="submit">Надіслати заявку</button>
+      <p class="consent">Натискаючи кнопку, ви погоджуєтеся на обробку вказаних даних для відповіді на заявку.</p>
+    </fieldset>
+  </form>
+</section>
+
+<footer class="wrap">
+  <p><strong>RAPACH IT</strong> — IT-інфраструктура для бізнесу<br />Київ</p>
+  <p class="links">
+    {telegram && <a href={`https://t.me/${telegram}`}>Telegram</a>}
+    {phone && <a href={`tel:${phone}`}>{phone}</a>}
+    {email && <a href={`mailto:${email}`}>{email}</a>}
+  </p>
+  <p>ФОП Рапач Ростислав<br />© 2026 RAPACH IT</p>
+</footer>
+
+<nav class="panel" aria-label="Зв'язок">
+  {telegram && <a href={`https://t.me/${telegram}`}>Telegram</a>}
+  {phone && <a href={`tel:${phone}`}>Подзвонити</a>}
+  <a class="button" href="#request">Заявка</a>
+</nav>
+
+<style>
+  .request { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 24px 64px; align-items: start; padding-block: 40px 80px; }
+  h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: calc(clamp(32px, 4vw, 48px) * var(--display-scale));
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  h2 em { color: var(--ink); }
+  form { padding: 32px; border: 1px solid var(--cream); border-radius: 16px; background: var(--paper); }
+  .status { margin: 0 0 24px; padding: 12px 16px; border-radius: 16px; background: var(--lavender); color: var(--ink); font-weight: 500; }
+  fieldset { display: grid; gap: 20px; min-width: 0; margin: 0; padding: 0; border: 0; }
+  label { display: grid; gap: 6px; font-size: 14px; font-weight: 500; }
+  input, select, textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cccccc;
+    border-radius: 16px;
+    background: var(--canvas);
+    color: var(--charcoal);
+    font: 400 16px/1.5 var(--font-body);
+  }
+  textarea { resize: vertical; }
+  button { justify-self: start; border: 0; font: 500 16px/1.6 var(--font-body); cursor: pointer; }
+  fieldset:disabled button { opacity: 0.45; cursor: not-allowed; }
+  .consent { margin: 0; font-size: 12px; }
+
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px 40px;
+    /* bottom space keeps the fixed panel off the text */
+    padding-block: 32px 112px;
+    border-top: 1px solid var(--cream);
+    font-size: 14px;
+  }
+  footer p { margin: 0; }
+  .links { display: flex; flex-wrap: wrap; gap: 20px; }
+  .links:empty { display: none; }
+
+  .panel {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 6px;
+    border: 1px solid #cccccc;
+    border-radius: 100px;
+    background: var(--paper);
+    box-shadow: 0 8px 32px rgba(12, 23, 84, 0.12);
+    white-space: nowrap;
+  }
+  .panel a:not(.button) { padding-left: 12px; font-size: 14px; font-weight: 500; text-decoration: none; }
+  .panel .button { padding: 8px 20px; font-size: 14px; }
+
+  @media (max-width: 860px) {
+    .request { grid-template-columns: 1fr; }
+    form { padding: 24px 20px; }
+  }
+</style>

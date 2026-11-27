@@ -1,5 +1,6 @@
 ---
 import mark from '../data/mark.json';
+import { contacts } from '../data/contacts.js';
 ---
 <section class="wrap hero">
   <div>
@@ -11,8 +12,9 @@ import mark from '../data/mark.json';
     </p>
     <div class="actions">
       <a class="button" href="#request">Залишити заявку</a>
-      <!-- Telegram link is added once the username is confirmed. -->
-      <a class="secondary" href="#request">Написати в Telegram</a>
+      {contacts.telegram && (
+        <a class="secondary" href={`https://t.me/${contacts.telegram}`}>Написати в Telegram</a>
+      )}
     </div>
   </div>
 
