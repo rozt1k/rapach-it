@@ -148,7 +148,7 @@ export default {
   },
   form: {
     title: ['Tell us ', 'what you need done', ''],
-    notReady: 'The form is not connected yet: this is a preview of the site.',
+    notReady: 'The form is not connected yet. Please message us on Telegram or call.',
     name: 'Name',
     namePlaceholder: 'What should we call you',
     contact: 'Phone or Telegram',

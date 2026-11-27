@@ -1,7 +1,7 @@
 // Empty values are hidden on the site.
 export const contacts = {
-  telegram: '', // username without @
-  phone: '', // +380XXXXXXXXX
+  telegram: 'rozt1k', // username without @
+  phone: '+380638537891', // +380XXXXXXXXX
   email: '', // only after the domain is connected
 };
 

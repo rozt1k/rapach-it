@@ -6,12 +6,18 @@ const { t } = Astro.props;
 const { form, footer, panel } = t;
 const { telegram, phone, email } = contacts;
 const ready = Boolean(formEndpoint);
+const phoneText = phone.replace(/^(\+380)(\d{2})(\d{3})(\d{2})(\d{2})$/, '$1 $2 $3 $4 $5');
 ---
 <section class="wrap request" id="request">
   <Heading title={form.title} />
   <!-- Sending logic is added together with the handler (stage 5). -->
   <form>
-    {!ready && <p class="status" role="note">{form.notReady}</p>}
+    {!ready && (
+      <p class="status" role="note">
+        {form.notReady}<br />
+        <a href={`https://t.me/${telegram}`}>@{telegram}</a> · <a href={`tel:${phone}`}>{phoneText}</a>
+      </p>
+    )}
     <fieldset disabled={!ready}>
       <label>{form.name} <input name="name" autocomplete="name" placeholder={form.namePlaceholder} required /></label>
       <label>{form.contact} <input name="contact" placeholder={form.contactPlaceholder} required /></label>
@@ -32,7 +38,7 @@ const ready = Boolean(formEndpoint);
   <p><strong>RAPACH IT</strong> — {footer.tagline}<br />{footer.city}</p>
   <p class="links">
     {telegram && <a href={`https://t.me/${telegram}`}>Telegram</a>}
-    {phone && <a href={`tel:${phone}`}>{phone}</a>}
+    {phone && <a href={`tel:${phone}`}>{phoneText}</a>}
     {email && <a href={`mailto:${email}`}>{email}</a>}
   </p>
   <p>{footer.legal}<br />© 2026 RAPACH IT</p>
