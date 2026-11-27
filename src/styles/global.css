@@ -1,0 +1,55 @@
+:root {
+  --ink: #0c1754;
+  --cobalt: #2545ff;
+  --charcoal: #171417;
+  --graphite: #222222;
+  --canvas: #f9f8f6;
+  --paper: #ffffff;
+  --cream: #f0e9e1;
+  --lavender: #eaebf8;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --font-sub: 'Inter Tight Variable', 'Inter Variable', system-ui, sans-serif;
+  --font-display: 'Source Serif 4 Variable', Georgia, serif;
+  --display-scale: 1;
+}
+
+/* EB Garamond has a smaller x-height, so it is set a bit larger. */
+:root[data-font='garamond'] {
+  --font-display: 'EB Garamond Variable', Georgia, serif;
+  --display-scale: 1.09;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--charcoal);
+  font: 400 16px/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: min(1200px, 100% - 48px);
+  margin-inline: auto;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 100px;
+  background: var(--cobalt);
+  color: var(--paper);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.button:hover { background: #1a35db; }

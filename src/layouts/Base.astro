@@ -1,0 +1,30 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/inter-tight';
+import '@fontsource-variable/source-serif-4';
+import '@fontsource-variable/source-serif-4/wght-italic.css';
+import '@fontsource-variable/eb-garamond';
+import '@fontsource-variable/eb-garamond/wght-italic.css';
+import '../styles/global.css';
+
+const { font = 'source' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<!doctype html>
+<html lang="uk" data-font={font}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Preview only: remove before the real launch. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>RAPACH IT — IT-обслуговування для бізнесу та дому в Києві</title>
+    <meta
+      name="description"
+      content="IT-інфраструктура для бізнесу та приватних клієнтів у Києві: комп'ютери, мережі, сервери, відеоспостереження, резервне живлення, абонентське обслуговування."
+    />
+    <link rel="icon" type="image/svg+xml" href={`${base}/icon.svg`} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
