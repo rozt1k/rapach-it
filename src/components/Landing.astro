@@ -4,16 +4,14 @@ import Header from './Header.astro';
 import Hero from './Hero.astro';
 import Sections from './Sections.astro';
 import Contact from './Contact.astro';
-import FontSwitch from './FontSwitch.astro';
 
-const { font } = Astro.props;
+const { t } = Astro.props;
 ---
-<Base font={font}>
-  <Header />
+<Base t={t}>
+  <Header t={t} />
   <main>
-    <Hero />
-    <Sections />
+    <Hero t={t} />
+    <Sections t={t} />
   </main>
-  <Contact />
-  <FontSwitch current={font} />
+  <Contact t={t} />
 </Base>

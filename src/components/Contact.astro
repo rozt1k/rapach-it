@@ -1,56 +1,52 @@
 ---
 import { contacts, formEndpoint } from '../data/contacts.js';
+import Heading from './Heading.astro';
+
+const { t } = Astro.props;
+const { form, footer, panel } = t;
 const { telegram, phone, email } = contacts;
 const ready = Boolean(formEndpoint);
 ---
 <section class="wrap request" id="request">
-  <h2>Розкажіть, <em>що потрібно зробити</em></h2>
+  <Heading title={form.title} />
   <!-- Sending logic is added together with the handler (stage 5). -->
   <form>
-    {!ready && <p class="status" role="note">Форма ще не підключена: це попередня версія сайту.</p>}
+    {!ready && <p class="status" role="note">{form.notReady}</p>}
     <fieldset disabled={!ready}>
-      <label>Ім'я <input name="name" autocomplete="name" placeholder="Як до вас звертатися" required /></label>
-      <label>Телефон або Telegram <input name="contact" placeholder="Куди відповісти" required /></label>
-      <label>Хто ви
+      <label>{form.name} <input name="name" autocomplete="name" placeholder={form.namePlaceholder} required /></label>
+      <label>{form.contact} <input name="contact" placeholder={form.contactPlaceholder} required /></label>
+      <label>{form.type}
         <select name="type">
-          <option value="">Не вказано</option>
-          <option>Бізнес</option>
-          <option>Приватний клієнт</option>
+          <option value="">{form.typeEmpty}</option>
+          {form.types.map((o) => <option>{o}</option>)}
         </select>
       </label>
-      <label>Опис <textarea name="message" rows="4" placeholder="Наприклад: потрібно налаштувати мережу в офісі" required></textarea></label>
-      <button class="button" type="submit">Надіслати заявку</button>
-      <p class="consent">Натискаючи кнопку, ви погоджуєтеся на обробку вказаних даних для відповіді на заявку.</p>
+      <label>{form.message} <textarea name="message" rows="4" placeholder={form.messagePlaceholder} required></textarea></label>
+      <button class="button" type="submit">{form.submit}</button>
+      <p class="consent">{form.consent}</p>
     </fieldset>
   </form>
 </section>
 
 <footer class="wrap">
-  <p><strong>RAPACH IT</strong> — IT-інфраструктура для бізнесу<br />Київ</p>
+  <p><strong>RAPACH IT</strong> — {footer.tagline}<br />{footer.city}</p>
   <p class="links">
     {telegram && <a href={`https://t.me/${telegram}`}>Telegram</a>}
     {phone && <a href={`tel:${phone}`}>{phone}</a>}
     {email && <a href={`mailto:${email}`}>{email}</a>}
   </p>
-  <p>ФОП Рапач Ростислав<br />© 2026 RAPACH IT</p>
+  <p>{footer.legal}<br />© 2026 RAPACH IT</p>
 </footer>
 
-<nav class="panel" aria-label="Зв'язок">
+<nav class="panel" aria-label={panel.label}>
   {telegram && <a href={`https://t.me/${telegram}`}>Telegram</a>}
-  {phone && <a href={`tel:${phone}`}>Подзвонити</a>}
-  <a class="button" href="#request">Заявка</a>
+  {phone && <a href={`tel:${phone}`}>{panel.call}</a>}
+  <a class="button" href="#request">{panel.request}</a>
 </nav>
 
 <style>
   .request { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 24px 64px; align-items: start; padding-block: 40px 80px; }
-  h2 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: calc(clamp(32px, 4vw, 48px) * var(--display-scale));
-    font-weight: 400;
-    line-height: 1.1;
-  }
-  h2 em { color: var(--ink); }
+  .request :global(h2) { margin: 0; }
   form { padding: 32px; border: 1px solid var(--cream); border-radius: 16px; background: var(--paper); }
   .status { margin: 0 0 24px; padding: 12px 16px; border-radius: 16px; background: var(--lavender); color: var(--ink); font-weight: 500; }
   fieldset { display: grid; gap: 20px; min-width: 0; margin: 0; padding: 0; border: 0; }

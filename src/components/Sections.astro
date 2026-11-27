@@ -1,11 +1,14 @@
 ---
-import { services, steps, packages, features, packageNotes, faq } from '../data/content.js';
+import Heading from './Heading.astro';
+
+const { t } = Astro.props;
+const { services, process, business, home, about, faq } = t;
 ---
 <section class="wrap block" id="services">
-  <p class="eyebrow">ПОСЛУГИ</p>
-  <h2>Від одного комп'ютера <em>до всієї мережі</em></h2>
+  <p class="eyebrow">{services.eyebrow}</p>
+  <Heading title={services.title} />
   <div class="services">
-    {services.map((s) => (
+    {services.list.map((s) => (
       <article class:list={['service', { featured: s.featured }]}>
         <div>
           <h3>{s.title}</h3>
@@ -18,10 +21,10 @@ import { services, steps, packages, features, packageNotes, faq } from '../data/
 </section>
 
 <section class="wrap block" id="process">
-  <p class="eyebrow">ЯК ПРАЦЮЄМО</p>
-  <h2>Від заявки <em>до результату</em></h2>
+  <p class="eyebrow">{process.eyebrow}</p>
+  <Heading title={process.title} />
   <ol class="steps">
-    {steps.map(([title, text], i) => (
+    {process.steps.map(([title, text], i) => (
       <li>
         <span class="number" aria-hidden="true">{i + 1}</span>
         <h3>{title}</h3>
@@ -32,13 +35,13 @@ import { services, steps, packages, features, packageNotes, faq } from '../data/
 </section>
 
 <section class="wrap block" id="business">
-  <p class="eyebrow">АБОНЕНТСЬКЕ ОБСЛУГОВУВАННЯ</p>
-  <h2>IT вашого офісу <em>під постійним наглядом</em></h2>
-  <p class="intro">Фіксована щомісячна вартість за пакетом. Роботи поза пакетом оплачуються погодинно.</p>
+  <p class="eyebrow">{business.eyebrow}</p>
+  <Heading title={business.title} />
+  <p class="intro">{business.intro}</p>
   <dl class="packages">
-    {packages.map(([name, size, text]) => (
+    {business.packages.map(([name, size, text]) => (
       <div>
-        <dt>Пакет «{name}» <small>{size}</small></dt>
+        <dt>{business.packageLabel(name)} <small>{size}</small></dt>
         <dd>{text}</dd>
       </div>
     ))}
@@ -46,16 +49,16 @@ import { services, steps, packages, features, packageNotes, faq } from '../data/
   <div class="table">
     <table>
       <thead>
-        <tr><th scope="col">Що входить</th>{packages.map(([name]) => <th scope="col">{name}</th>)}</tr>
+        <tr><th scope="col">{business.tableHead}</th>{business.packages.map(([name]) => <th scope="col">{name}</th>)}</tr>
       </thead>
       <tbody>
-        {features.map(([label, ...values]) => (
+        {business.features.map(([label, ...values]) => (
           <tr>
             <th scope="row">{label}</th>
             {values.map((v) => (
               <td>
-                {v === true ? <span role="img" aria-label="входить">✓</span>
-                  : v === false ? <span role="img" aria-label="не входить">—</span>
+                {v === true ? <span role="img" aria-label={business.included}>✓</span>
+                  : v === false ? <span role="img" aria-label={business.excluded}>—</span>
                   : v}
               </td>
             ))}
@@ -64,46 +67,36 @@ import { services, steps, packages, features, packageNotes, faq } from '../data/
       </tbody>
     </table>
   </div>
-  <ul class="notes">{packageNotes.map((n) => <li>{n}</li>)}</ul>
-  <p>Більше комп'ютерів чи серверів? Обговоримо індивідуально. Вартість залежить від складу техніки та задач.</p>
-  <a class="button" href="#request">Обговорити обслуговування</a>
+  <ul class="notes">{business.notes.map((n) => <li>{n}</li>)}</ul>
+  <p>{business.custom}</p>
+  <a class="button" href="#request">{business.cta}</a>
 </section>
 
 <section class="wrap block">
   <div class="home">
-    <p class="eyebrow">ДЛЯ ДОМУ</p>
-    <h2>Допомога з технікою <em>без складних слів</em></h2>
-    <p>
-      Налаштуємо комп'ютер, знайдемо несправність, замінимо комплектуючі, зробимо
-      стабільний Wi-Fi або підберемо нову техніку під ваш бюджет.
-    </p>
-    <a class="button" href="#request">Залишити заявку</a>
+    <p class="eyebrow">{home.eyebrow}</p>
+    <Heading title={home.title} />
+    <p>{home.text}</p>
+    <a class="button" href="#request">{home.cta}</a>
   </div>
 </section>
 
 <section class="wrap block split" id="about">
   <div>
-    <p class="eyebrow">ПРО RAPACH IT</p>
-    <h2>За брендом — <em>жива людина</em></h2>
-    <p class="person"><strong>Ростислав Рапач</strong>, CEO<br />Понад 10 років досвіду в IT.</p>
+    <p class="eyebrow">{about.eyebrow}</p>
+    <Heading title={about.title} />
+    <p class="person"><strong>{about.name}</strong>, CEO<br />{about.experience}</p>
   </div>
   <div class="story">
-    <h3>Чому деркач</h3>
-    <p>
-      Прізвище Рапач походить від діалектного «рапак», або «рапач»: так у західних і
-      карпатських говірках називають деркача. Це прізвисько давали жвавим і говірким людям.
-    </p>
-    <p>
-      Деркача рідко видно, але чути здалеку. Так ми уявляємо добрий IT-сервіс: техніка
-      працює без зайвої метушні, а зв'язатися з нами легко. І говоримо ми зрозуміло, без жаргону.
-    </p>
+    <h3>{about.storyTitle}</h3>
+    {about.story.map((p) => <p>{p}</p>)}
   </div>
 </section>
 
 <section class="wrap block split" id="faq">
-  <h2 class="sticky"><em>Запитання</em>, які варто поставити</h2>
+  <div class="sticky"><Heading title={faq.title} /></div>
   <div>
-    {faq.map(([q, a]) => (
+    {faq.list.map(([q, a]) => (
       <details>
         <summary>{q}</summary>
         <p>{a}</p>
@@ -115,16 +108,6 @@ import { services, steps, packages, features, packageNotes, faq } from '../data/
 <style>
   .block { padding-block: 40px; scroll-margin-top: 16px; }
   .eyebrow { margin: 0 0 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; }
-  h2 {
-    margin: 0 0 32px;
-    max-width: 18em;
-    font-family: var(--font-display);
-    font-size: calc(clamp(32px, 4vw, 48px) * var(--display-scale));
-    font-weight: 400;
-    line-height: 1.1;
-    text-wrap: balance;
-  }
-  h2 em { color: var(--ink); }
   h3 {
     margin: 0 0 8px;
     color: var(--ink);
@@ -196,7 +179,7 @@ import { services, steps, packages, features, packageNotes, faq } from '../data/
   .notes { padding-left: 20px; }
 
   .home { padding: 48px; border-radius: 24px; background: var(--lavender); }
-  .home h2 { margin-bottom: 16px; }
+  .home :global(h2) { margin-bottom: 16px; }
   .home p:not(.eyebrow) { max-width: 40em; margin: 0 0 24px; }
 
   .split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 24px 64px; align-items: start; }
@@ -224,7 +207,8 @@ import { services, steps, packages, features, packageNotes, faq } from '../data/
     .service:not(.featured) { padding-inline: 0; }
     .featured, .steps li, .story { padding: 24px; }
     .home { padding: 32px 24px; }
-    .sticky { position: static; margin-bottom: 0; }
+    .sticky { position: static; }
+    .sticky :global(h2) { margin-bottom: 0; }
   }
   @media (max-width: 560px) {
     table { font-size: 12px; line-height: 1.4; }

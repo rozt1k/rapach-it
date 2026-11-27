@@ -1,19 +1,18 @@
 ---
 import mark from '../data/mark.json';
 import { contacts } from '../data/contacts.js';
+
+const { t } = Astro.props;
 ---
 <section class="wrap hero">
   <div>
-    <p class="eyebrow">RAPACH IT · КИЇВ</p>
-    <h1>Один контакт для <em><span class="nowrap">будь-якого</span> <span class="nowrap">IT-питання</span></em></h1>
-    <p class="lead">
-      IT-інфраструктура для бізнесу та приватних клієнтів у Києві. Комп'ютери,
-      мережі, сервери, безпека й техніка — з усім цим можна звернутися в одне місце.
-    </p>
+    <p class="eyebrow">{t.hero.eyebrow}</p>
+    <h1>{t.hero.title} <em><span class="nowrap">{t.hero.accent[0]}</span> <span class="nowrap">{t.hero.accent[1]}</span></em></h1>
+    <p class="lead">{t.hero.lead}</p>
     <div class="actions">
-      <a class="button" href="#request">Залишити заявку</a>
+      <a class="button" href="#request">{t.hero.cta}</a>
       {contacts.telegram && (
-        <a class="secondary" href={`https://t.me/${contacts.telegram}`}>Написати в Telegram</a>
+        <a class="secondary" href={`https://t.me/${contacts.telegram}`}>{t.hero.telegram}</a>
       )}
     </div>
   </div>
@@ -21,7 +20,7 @@ import { contacts } from '../data/contacts.js';
   <div class="visual">
     <div class="card-back" aria-hidden="true"></div>
     <div class="card">
-      <svg viewBox={mark.viewBox} role="img" aria-label="Деркач, що подає сигнал">
+      <svg viewBox={mark.viewBox} role="img" aria-label={t.hero.markLabel}>
         <path d={mark.bird} fill-rule="evenodd" />
         {mark.arcs.map((d, i) => <path class="arc" style={`--i:${i}`} d={d} />)}
       </svg>

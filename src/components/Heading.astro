@@ -1,0 +1,6 @@
+---
+// title = [text before, italic accent, text after]
+const { title, class: className } = Astro.props;
+const [before, accent, after] = title;
+---
+<h2 class={className}>{before}<em>{accent}</em>{after}</h2>
